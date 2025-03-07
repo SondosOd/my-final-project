@@ -40,6 +40,6 @@ The program interacts with the user to:
   - **User Type** distribution (Subscriber vs Customer).
   - **Gender Breakdown** (if available).
   - **Birth Year Insights** (earliest, most recent, most common).
-- **Raw Data Display:** Users can view data in chunks of 5 rows.
+- **Raw Data Display:** Users can view data in chunks of 7 rows.
 
 
