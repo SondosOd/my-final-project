@@ -1,15 +1,15 @@
-# 🚲 BikeShare Data Analysis Project
+# BikeShare Data Analysis Project
 
 This project allows users to explore bikeshare data for **Chicago, New York City, and Washington**.  
 Users can filter the data by **month** and **day** to analyze trends in bike usage.
 
-## 📂 Project Overview
+## Project Overview
 The program interacts with the user to:
 - Select a city and filter the data by month and/or day.
 - Display statistics on **popular travel times, stations, trip durations, and user demographics**.
 - Optionally show raw data upon request.
 
-## ⚙️ Features
+## Features
 ### 🔹 **System Functions**
 - **Clear Screen:** Clears the terminal before running or restarting the script.
   - Works on both **Windows** (`cls`) and **Mac/Linux** (`clear`).
@@ -43,7 +43,7 @@ The program interacts with the user to:
 - **Raw Data Display:** Users can view data in chunks of 5 rows.
 
 ## 🛠 Installation & Usage
-### **1️⃣ Clone the Repository**
+### **1️Clone the Repository**
 ```bash
 git clone https://github.com/SondosOd/sondosodehfinal.git
 cd sondosodehfinal
