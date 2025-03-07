@@ -1,109 +1,49 @@
-""" Clear the screen before running or restarting the script. """
-# for windows
-# for mac and linux
+# 🚲 BikeShare Data Analysis Project
 
-"""
-Asks user to specify a city, month, and day to analyze.
+This project allows users to explore bikeshare data for **Chicago, New York City, and Washington**.  
+Users can filter the data by **month** and **day** to analyze trends in bike usage.
 
-Returns:
-    (str) city - name of the city to analyze
-    (str) month - name of the month to filter by, or "all" to apply no month filter
-    (str) day - name of the day of week to filter by, or "all" to apply no day filter
-"""
+## 📂 Project Overview
+The program interacts with the user to:
+- Select a city and filter the data by month and/or day.
+- Display statistics on **popular travel times, stations, trip durations, and user demographics**.
+- Optionally show raw data upon request.
 
-# City selection
-# valid selection list
+## ⚙️ Features
+### 🔹 **System Functions**
+- **Clear Screen:** Clears the terminal before running or restarting the script.
+  - Works on both **Windows** (`cls`) and **Mac/Linux** (`clear`).
 
-# Input validation
+### 🔹 **User Input Handling**
+- **City Selection:** Users can choose between `Chicago`, `New York City`, and `Washington`.
+- **Time Filters:** 
+  - Can filter data by `month`, `day`, `both`, or `none`.
+  - Available months: `January - June`
+  - Available days: `Monday - Sunday`
+- **Input Validation:** Ensures the user provides a valid input before proceeding.
 
-# time filter selection
-# valid selection list
+### 🔹 **Data Processing**
+- **Load Data:** Reads city-specific CSV files and applies selected filters.
+- **Convert Datetime Columns:** Converts `'Start Time'` to a datetime format.
+- **Extract New Features:** Adds `'Month'` and `'Day'` columns for filtering.
 
-# lists of the valid months and days values
+### 🔹 **Statistics & Insights**
+- **Popular Travel Times:**
+  - Most common `month`, `day of the week`, and `hour` for bike rides.
+- **Station Analysis:**
+  - Most frequently used **start station** and **end station**.
+  - Most common **trip route**.
+- **Trip Duration:**
+  - **Total travel time** (formatted in `days:hours:minutes:seconds`).
+  - **Average travel time** per trip.
+- **User Demographics:**
+  - **User Type** distribution (Subscriber vs Customer).
+  - **Gender Breakdown** (if available).
+  - **Birth Year Insights** (earliest, most recent, most common).
+- **Raw Data Display:** Users can view data in chunks of 5 rows.
 
-# none filter
-
-# both filter
-# month selection
-# Input validation
-
-# day selection
-# Input validation
-
-# month filter
-
-# day filter
-
-"""
-Loads data for the specified city and filters by month and day if applicable.
-
-Args:
-    (str) city - name of the city to analyze
-    (str) month - name of the month to filter by, or "all" to apply no month filter
-    (str) day - name of the day of week to filter by, or "all" to apply no day filter
-Returns:
-    df - Pandas DataFrame containing city data filtered by month and day
-"""
-
-# load data file into a dataframe
-
-# converting the 'Start Time' column to a datetime
-
-# creating new columns 'Month' & 'Day'
-
-# Filter by month if applicable
-# New dataframe filtered by month
-
-# Filter by day of week if applicable
-# New dataframe filtered by day
-
-"""Displays statistics on the most frequent times of travel."""
-
-# most common month
-
-# most common day
-
-# create an hour column from the 'Start Time' column
-
-# most common start hour
-
-"""Displays statistics on the most popular stations and trip."""
-
-# most commonly used start station
-
-# most commonly used end station
-
-# most frequent combination of start station and end station trip
-
-"""Displays statistics on the total and average trip duration."""
-
-# Time conversion constants
-
-# total travel time
-
-# Time conversion
-
-# printing converted time
-
-# Mean time travel
-
-"""Displays statistics on bikeshare users."""
-
-# Counts of user types
-
-# counts of gender
-
-# Display earliest, most recent, and most common year of birth
-
-
-"""
-The function takes the city name from get_filters function as input 
-and returns the raw data of that city by chunks of 5 rows.
-
-Args:
-    (str) city - name of the city to return the raw data.
-Returns:
-    df - raw data of that city by chunks of 5 rows.
-"""
-
-# Raw data is available to check
+## 🛠 Installation & Usage
+### **1️⃣ Clone the Repository**
+```bash
+git clone https://github.com/SondosOd/sondosodehfinal.git
+cd sondosodehfinal
