@@ -151,40 +151,48 @@ filtered_values = get_filters()
 city, month, day = filtered_values
 
 
+import pandas as pd
+
 def load_data(city, month, day):
     """
-    Loads data for the specified city and filters by month and day if applicable.
+    Loads data for the specified city and filters it based on the chosen month and day.
 
     Args:
-        (str) city - name of the city to analyze
-        (str) month - name of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
-    Returns:
-        df - Pandas DataFrame containing city data filtered by month and day
-    """
-    # load data file into a dataframe
-    df = pd.read_csv(CITY_DATA[city])
+        city (str): Name of the city to analyze.
+        month (str): Name of the month to filter by, or "all" to apply no month filter.
+        day (str): Name of the day of the week to filter by, or "all" to apply no day filter.
 
-    # converting the 'Start Time' column to a datetime
+    Returns:
+        pd.DataFrame: Filtered Pandas DataFrame containing city data.
+    """
+
+    # Load city data into a DataFrame
+    try:
+        df = pd.read_csv(CITY_DATA[city])
+    except FileNotFoundError:
+        print(f"Error: Data file for {city} not found.")
+        return None
+    except KeyError:
+        print(f"Error: Invalid city name '{city}' provided.")
+        return None
+
+    # Convert 'Start Time' column to datetime format
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # creating new columns 'Month' & 'Day'
+    # Extract month and day of the week for filtering
     df['Month'] = df['Start Time'].dt.month_name()
     df['Day'] = df['Start Time'].dt.day_name()
 
-    # Filter by month if applicable
-    if month != 'all':
-        # New dataframe filtered by month
-        df = df[df['Month'] == month.title()]
-    else:
-        pass
+    # Apply month filter if necessary
+    if month.lower() != 'all':
+        df = df[df['Month'].str.lower() == month.lower()]
 
-    # Filter by day of week if applicable
-    if day != 'all':
-        # New dataframe filtered by day
-        df = df[df['Day'] == day.title()]
+    # Apply day filter if necessary
+    if day.lower() != 'all':
+        df = df[df['Day'].str.lower() == day.lower()]
 
     return df
+
 
 
 df = load_data(city, month, day)
@@ -220,31 +228,50 @@ def time_stats(df):
 time_stats(df)
 
 
-def station_stats(df):
-    """Displays statistics on the most popular stations and trip."""
+import time
 
-    print('\nCalculating The Most Popular Stations and Trip...\n')
+def station_stats(df):
+    """
+    Displays statistics on the most popular stations and trips, including:
+    - Most frequently used start station
+    - Most frequently used end station
+    - Most common trip (start to end station)
+
+    Args:
+        df (pd.DataFrame): The DataFrame containing bikeshare data.
+
+    Returns:
+        None
+    """
+    print('\n🚲 Calculating The Most Popular Stations and Trips...\n')
     start_time = time.time()
 
-    # most commonly used start station
-    popular_start_station = df['Start Station'].mode()[0]
-    print(f"Most commonly used start station: {popular_start_station}\n")
+    # Get the most commonly used start station
+    if 'Start Station' in df.columns:
+        popular_start_station = df['Start Station'].mode()[0]
+        print(f"📍 Most commonly used start station: {popular_start_station}")
 
-    # most commonly used end station
-    popular_end_station = df['End Station'].value_counts().index.tolist()[0]
-    print(f"Most commonly used end station: {popular_end_station}\n")
+    # Get the most commonly used end station
+    if 'End Station' in df.columns:
+        popular_end_station = df['End Station'].mode()[0]
+        print(f"🚏 Most commonly used end station: {popular_end_station}")
 
-    # most frequent combination of start station and end station trip
-    most_frequent_route = df.groupby(['Start Station', 'End Station']).size().reset_index(name='count').sort_values(
-        'count', ascending=False).head(1).reset_index()[['Start Station', 'End Station', 'count']]
-    print(
-        f"Most frequent combination of start station and end station trip: {most_frequent_route}\n")
+    # Get the most frequent start-end station combination
+    if 'Start Station' in df.columns and 'End Station' in df.columns:
+        most_frequent_route = (
+            df.groupby(['Start Station', 'End Station'])
+            .size()
+            .idxmax()
+        )
+        print(f"🔄 Most frequent trip: {most_frequent_route[0]} ➡ {most_frequent_route[1]}")
 
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*40)
+    # Print execution time
+    print(f"\n⏳ This took {time.time() - start_time:.4f} seconds.")
+    print('-' * 40)
 
-
+# Call function with DataFrame
 station_stats(df)
+
 
 
 def trip_duration_stats(df):
